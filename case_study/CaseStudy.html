@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bellabeat Case Study - Data Analytics Project</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f9f9;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+    /*=====================================*/
+   .header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.profile-pic {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  animation: pulseGlow 3s ease-in-out infinite, floatY 6s ease-in-out infinite;
+  transition: 0.4s;
+}
+.profile-pic:hover{
+   border-radius: 30%;
+   transition: 1s;
+}
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgb(255, 255, 255);
+  }
+}
+
+@keyframes floatY {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.text-content {
+  text-align: center;
+}
+
+.profile-desc {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f0f0f0;
+  margin-top: 0.5rem;
+}
+    /*=====================================*/
+    header {
+      background: linear-gradient(to right, #59c4b8, #4cb2a3);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .header-content.side-layout {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  text-align: left;
+}.text-content {
+  max-width: 600px;
+}
+    .intro {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+      background: white;
+      text-align: center;
+      animation: fadeIn 1s ease-in;
+    }
+    .intro p{
+      color: #1f1f1f;
+    }
+    .intro h1 {
+      color: #2a7f7f;
+      padding-left: 10px;
+      margin-top: 2rem;
+    }
+    .intro .btn {
+      display: inline-block;
+      margin: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #59c4b8;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .intro .btn:hover {
+      background-color: #4cb2a3;
+    }
+    section {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+      background: white;
+      animation: fadeIn 1s ease-in;
+    }
+    h2 {
+      color: #2a7f7f;
+      border-left: 5px solid #59c4b8;
+      padding-left: 10px;
+      margin-top: 2rem;
+    }
+    h3 {
+      margin-top: 1.5rem;
+      color: #444;
+    }
+    canvas {
+  display: block;
+  margin: 2rem auto;
+  width: 100% !important;
+  height: 480px !important;
+  max-width: 1000px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+    canvas:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    ul {
+      padding-left: 1.5rem;
+    }
+    footer {
+      background: #59c4b8;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+      .screenshot-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .screenshot-gallery img {
+      width: 250px;
+      height: auto;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .screenshot-gallery img:hover {
+      transform: scale(1.05);
+    }
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+    .code-block {
+      background: #1f1f1f;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      color: #f0f0f0;
+      font-family: 'Courier New', monospace;
+    }
+    /* UI animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards ease-out;
+    }
+    .fade-in:nth-child(1) { animation-delay: 0.2s; }
+    .fade-in:nth-child(2) { animation-delay: 0.4s; }
+    .fade-in:nth-child(3) { animation-delay: 0.6s; }
+    .fade-in:nth-child(4) { animation-delay: 0.8s; }
+    .fade-in:nth-child(5) { animation-delay: 1s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .graph-description {
+      text-align: center;
+      font-size: 1rem;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      color: #555;
+    }
+    /*=====================================*/
+ body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: linear-gradient(270deg, #d9a7c7, #fffcdc, #fbc2eb);
+  background-size: 600% 600%;
+  animation: animatedGradient 20s ease infinite;
+  opacity: 0.3;
+}
+
+@keyframes animatedGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.portfolio-summary {
+  background: white;
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-left: 5px solid #59c4b8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.summary-text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+
+</style>
+</head>
+<body>
+<header class="fade-in">
+  <div class="header-content side-layout">
+    <a href="/index.html"><img src="/images/my-profile-img.jpg" alt="Krishnanunni H Pillai" class="profile-pic" /></a>
+    <div class="text-content">
+      <h1>Bellabeat Case Study</h1>
+      <p>Data Driven Insights for Wellness & Marketing Strategy</p>
+    </div>
+  </div>
+</header>
+
+  <div class="intro fade-in">
+    <h1 class="author-name">Krishnanunni H Pillai</h1>
+    <p class="profile-desc">Tech Enthusiast | Data Analyst | Mentor | Coach</p>
+    <a href="#project" class="btn">View Project</a>
+    <a href="CaseStudy_report.pdf" download class="btn" >Download PDF</a>
+    <a href="#contsum" class="btn">Contact</a>
+</div>
+
+<section id="project" class="fade-in">
+    <h2>Business Task</h2>
+    <p contenteditable="true">
+      Analyze smart device usage data to identify user behavior patterns that can help
+Bellabeat optimize its marketing strategy and improve user engagement. The
+goal is to uncover trends in physical activity, sleep, and overall wellness behaviors
+using wearable device data. These findings will guide the development of
+personalized wellness content, targeted marketing campaigns, and product
+improvements to increase user satisfaction and market competitiveness. Analyze
+smart device usage data to identify user behavior patterns that can help
+Bellabeat optimize its marketing strategy and improve user engagement.
+    </p>
+
+    <h2>Company Background</h2>
+    <ul contenteditable="true">
+      <li>Bellabeat is a wellness-focused technology company founded in 2013 by Urska Srsen and Sando Mur.</li>
+      <li>The company designs smart devices and apps tailored to women's health and lifestyle tracking.</li>
+      <li>Bellabeat offers a subscription-based program that provides personalized wellness guidance based on user data.</li>
+      <li>The company operates globally and relies on digital marketing, including social media and targeted ads, to reach and engage its audience.</li>
+    </ul>
+
+    <h2>Dataset Overview</h2>
+    <p contenteditable="true">
+      Fitbit Fitness Tracker Data (Public Domain - Kaggle)
+        <br>● Data collected from 30 Fitbit users who volunteered to share their minute-level
+        fitness data.
+        <br>● Includes multiple CSV files covering daily activity, steps, calories burned, sleep
+        duration, weight logs, BMI, and body fat percentage.
+        <br>● Covers a wide range of health behaviors: physical activity, rest, hydration, and body
+        composition.
+        <br>● Selected for its relevance to Bellabeat user base and the wellness insights it can
+        generate.
+        <br>● Limitations: Small sample size, not Bellabeat-specific, mostly anonymized data.
+        <br>● Tracks: Steps, Calories, Sleep, Weight, Fat %, BMI
+        <br>● Public domain dataset from Kaggle
+    </p>
+
+    <h2>Data Cleaning</h2>
+    <p contenteditable="true">
+      Using <b>R</b> with the <b> tidyverse, lubridate, and janitor packages</b>, <br>
+       <div class="screenshot-gallery">
+    <img src="/images/R_logo.png" alt="Dashboard Overview" onclick="enlargeImage(this)">
+    <img src="/images/tidyverse_package.png" alt="Dashboard Overview" onclick="enlargeImage(this)">
+    <img src="/images/Screenshot 2025-06-28 190412.png" alt="Chart Insight" onclick="enlargeImage(this)">
+    <img src="/images/Screenshot 2025-06-28 140509.png" alt="Chart Insight" onclick="enlargeImage(this)">
+    <img src="/images/Screenshot 2025-06-28 221447.png" alt="Chart Insight" onclick="enlargeImage(this)">
+    <img src="/images/Screenshot 2025-06-29 101337.png" alt="Chart Insight" onclick="enlargeImage(this)">
+  </div>
+      I imported and reviewed multiple CSV files to check the structure and quality of the data. <br><br>
+      I standardized column names with <b>janitor::clean_names()</b> to keep uniformity across the datasets. <br> 
+      I also converted the date and time fields using lubridate functions for consistent formatting. <br>
+      I removed duplicate records to keep the data unique, and I handled missing values and <b>NA</b> entries with suitable cleaning methods. 
+      Next, I filtered and joined key datasets, including daily activity, sleep, and weight logs, to support a combined analysis. <br><br>
+      To improve data usability, I extracted the latest ,<b>BMI</b> value for each user 
+      and rounded timestamps to make the records fit together better. Finally, 
+      I checked the data structure and fixed any inconsistencies across datasets to establish a clean and reliable basis for analysis.
+    </p>
+
+    <h2>Key Insights</h2>
+    <h3>1. Active Hours</h3>
+<p contenteditable="true">
+  <strong>Findings: </strong><br>
+  Analysis of the daily activity data revealed that most users tend to engage in 
+  physical activity during the late afternoon and early evening hours, particularly between 4 PM and 7 PM. 
+  This time window consistently shows the highest step counts and active minutes.
+  <br><br>
+  <strong>Analysis process:</strong>
+</p>
+<p contenteditable="true">importing the needed dataset for analysis</p>
+<pre class="code-block">
+  steps <- read.csv("minuteStepsNarrow_merged.csv")
+  View(steps)
+</pre>
+<p contenteditable="true">Cleaning & Organizing the data</p>
+<pre class="code-block">
+  steps$ActivityMinute <- as.POSIXct(steps$ActivityMinute, format="%m/%d/%Y %I:%M:%S %p")
+  View(steps)
+
+  #Etract Hour from Time column
+  steps$Hour <- hour(steps$ActivityMinute)
+  View(steps)
+
+  #Finding total steps by hour
+  # Total steps by hour
+  hourly_steps <- steps %>%
+    group_by(Hour) %>%
+    summarise(AverageSteps = mean(Steps))
+  View(steps)
+
+  #Ploting the values in bar graph
+  ggplot(hourly_steps, aes(x=Hour,y=AverageSteps))+
+    geom_line()+
+    geom_point()+
+    labs(title = "Average Steps by Hour of Day", x="Hour", y="Average Steps")
+
+
+  #Time Period wise Analysis
+  #Morning-AfternoonEvening-Night, kindaaa
+
+  steps <- steps %>%
+    mutate(TimeOfDay = case_when(
+      Hour >= 5  & Hour < 12 ~ "Morning",
+      Hour >= 12 & Hour < 16 ~ "Afternoon",
+      Hour >= 16 & Hour < 19 ~ "Evening",
+      TRUE                  ~ "Night"
+    ))
+
+  #group by time period
+  period_steps <- steps %>% 
+    group_by(TimeOfDay) %>% 
+    summarise(AverageSteps=mean(Steps))
+</pre>
+<p contenteditable="true">Creating the graph for better understanding</p>
+<pre class="code-block">
+  #Visualizing
+  ggplot(period_steps, aes(x=TimeOfDay,y=AverageSteps,fill=TimeOfDay))+
+    geom_bar(stat = "identity")+
+    labs(title="Average Steps by Time of Day",x="Time of Day",y="Average Steps")
+</pre>
+<p class="graph-description" contenteditable="true"><strong>Result : </strong>
+  <br>This bar chart shows that users are most active in the afternoon and evening, 
+  with fewer steps recorded during morning and night hours.
+</p>
+<canvas id="activityChart"></canvas>
+<p contenteditable="true">
+  <br>
+  <strong>Action:</strong><br> Bellabeat should schedule motivational push notifications, 
+  reminders, or app based challenges during this time to match users' natural behavior patterns. 
+  This could improve engagement and support healthy habits when users are most open to them.
+</p>
+
+    <h3>2. Average Daily Steps</h3>
+<p contenteditable="true">
+  <strong>Findings:</strong> <br>Users take an average of 6,565 steps per day. 
+  This is below the commonly recommended target of 10,000 steps per day for good health. 
+  The distribution of step counts also shows that many users regularly fall short of this goal. 
+  This may indicate a need for prompts or goal-setting features.
+   <br><br>
+  <strong>Analysis process :</strong>
+</p>
+<p contenteditable="true">
+  Loading the DataSet
+</p>
+<pre class="code-block">
+  hourly <- read.csv("/hourlySteps_merged.csv")
+  View(hourly)
+</pre>
+<p contenteditable="true">Cleaning & Organizing the data</p>
+<pre class="code-block">
+#Activity hour to date-time
+hourly$ActivityHour <- as.POSIXct(hourly$ActivityHour,format="%m/%d/%Y %I:%M:%S %p")
+
+#Extract date(without time)
+hourly$Date <- as.Date(hourly$ActivityHour)
+View(hourly)
+
+#Aggregate to daily steps per user
+daily_steps <- hourly %>% 
+  group_by(Id,Date) %>% 
+  summarise(DailyStepTotal = sum(StepTotal), .groups = "drop")
+View(daily_steps)
+
+#Calculating average steps users take on a day
+
+average_daily_steps <- mean(daily_steps$DailyStepTotal)
+print(average_daily_steps)
+
+#Average steps per user
+user_avg_steps <- daily_steps %>% 
+  group_by(Id) %>% 
+  summarise(AverageDailySteps = mean(DailyStepTotal))
+View(user_avg_steps)
+</pre>
+<p contenteditable="true">Visualizing the Analysis</p>
+<pre class="code-block">
+#visualizing
+
+ggplot(user_avg_steps, aes(x = factor(Id), y = AverageDailySteps, fill = Highlight)) +
+  geom_col() +
+  scale_fill_manual(values = c("Top User" = "purple", "Other Users" = "skyblue")) +
+  labs(title = "Average Daily Steps by User",x = "User ID", y = "Average Daily Steps") +
+  theme_minimal() +
+  theme(axis.text.x=element_text(angle = 45, hjust = 1))
+</pre>
+<p class="graph-description" contenteditable="true">
+  <strong>Result: </strong><br>
+  This visual highlights daily steps per user, with one user significantly outperforming others in step count.
+</p>
+<canvas id="stepsChart"></canvas>
+<p contenteditable="true">
+  <br><br>
+  <strong> Action: </strong>
+  <br>Encourage users to set and gradually increase their daily step goals 
+  using gamified elements in the app. <br>Features like virtual challenges, achievement badges, 
+  and community leaderboards can motivate users to stay active and track progress toward healthier habits.
+</p>
+
+    <h3>3. Sleep & Activity Correlation</h3>
+<p contenteditable="true">
+ <strong>Findings:</strong><br> 
+ Users who sleep between six and eight hours a night have the highest 
+ average step counts when compared to those who sleep less than six or more than eight hours. 
+ This suggests that the optimal amount of sleep and increased physical activity are closely related.
+  <br><br>
+  <strong>Analysis process:</strong>
+</p>
+<p contenteditable="true">Loading the dataset</p>
+<pre class="code-block">
+sleep <- read.csv("/minuteSleep_merged.csv")
+View(sleep)
+
+steps <- read.csv("/hourlySteps_merged.csv")
+View(steps)
+</pre>
+<p contenteditable="true">Cleaning & Organizing the data</p>
+<pre class="code-block">
+# Convert date column to Date type
+sleep$Date <- as.Date(sleep$date, format = "%m/%d/%Y %I:%M:%S %p")
+
+
+daily_sleep <- sleep %>%
+  group_by(Id, Date) %>%
+  summarise(TotalMinutesAsleep = sum(value), .groups = "drop")
+
+steps$ActivityHour <- as.POSIXct(steps$ActivityHour, format = "%m/%d/%Y %I:%M:%S %p")
+steps$Date <- as.Date(steps$ActivityHour)
+
+daily_steps <- steps %>%
+  group_by(Id, Date) %>%
+  summarise(TotalSteps = sum(StepTotal), .groups = "drop")
+
+merged_data <- inner_join(daily_steps, daily_sleep, by = c("Id", "Date"))
+
+View(merge_data)
+
+print(paste("Rows after merge:", nrow(merged_data)))
+
+
+clean_data <- clean_data %>%
+  mutate(SleepCategory = case_when(
+    TotalMinutesAsleep < 360 ~ "Less than 6 hrs",
+    TotalMinutesAsleep < 480 ~ "6-8 hrs",
+    TRUE ~ "More than 8 hrs"
+  ))
+avg_steps_by_sleep <- clean_data %>%
+  group_by(SleepCategory) %>%
+  summarise(AverageSteps = mean(TotalSteps), .groups = "drop")
+</pre>
+<p contenteditable="true">Visualizing the analysis</p>
+<pre class="code-block">
+ggplot(avg_steps_by_sleep, aes(x = SleepCategory, y = AverageSteps, fill = SleepCategory)) +
+  geom_col(width = 0.6) +
+  labs(title = "Average Daily Steps by Sleep Duration",
+       x = "Sleep Duration Group",
+       y = "Average Steps") +
+  theme_minimal() +
+  theme(legend.position = "none")  
+</pre>
+<p class="graph-description" contenteditable="true">
+  <strong>Result:</strong><br>
+  Users who sleep between 6 to 8 hours tend to have higher average daily steps compared to those with shorter or longer sleep durations.
+</p>
+<canvas id="sleepChart"></canvas>
+<p contenteditable="true">
+  <br><br>
+  <strong>Action:</strong><br>
+  Implementing personalized sleep tracking and insights into the Bellabeat app. <br>
+  Promote healthy sleep habits through wellness challenges focused on getting
+  6–8 hours of sleep with educational content and gentle prompting designed to enhance sleep and daily activity.
+</p>
+
+    <h3>4. BMI Analysis</h3>
+<p contenteditable="true">
+  <strong>Findings:</strong>
+  <br>According to their weight logs, the average BMI is 25.73, which means the average user 
+  falls just into the overweight category according to WHO. Mean weight is 73.44 kg, 
+  mean percent body fat is 16%. Although these thresholds may differ between age groups and sexes, 
+  the BMI insight indicates an overall trend that a subset of users may be good candidates for additional support in weight management.
+</p>
+<p contenteditable="true"><Strong>Analysis process:</Strong><br>
+  Importing data
+</p>
+<pre class="code-block">
+data <- read.csv("/WeightLogInfo_merged.csv")
+View(data)
+</pre>
+<p contenteditable="true">Cleaning & Organizing the data</p>
+<pre class="code-block">
+# Apply clean names and fix date
+data <- data %>%
+  clean_names() %>%
+  mutate(date = mdy_hms(date))  # Convert to proper datetime format
+
+# View first rows and structure
+View(data)
+head(data)
+glimpse(data)
+summary(data)
+
+# Unique users
+n_distinct(data$id)
+
+# Summary stats
+weight_summary <- data %>% 
+  summarise(
+    avg_wght_kg = mean(weight_kg, na.rm = TRUE),
+    avg_bmi = mean(bmi, na.rm = TRUE),
+    avg_fat = mean(fat, na.rm = TRUE)
+  )
+View(weight_summary)
+print(weight_summary)
+
+# Filter for latest BMI per user (and drop NAs)
+bmi_per_user <- data %>%
+  filter(!is.na(bmi)) %>%
+  group_by(id) %>%
+  arrange(desc(date)) %>%
+  slice(1) %>%
+  ungroup()
+
+# Plot BMI per user
+ggplot(bmi_per_user, aes(x = factor(id), y = bmi)) +
+  geom_bar(stat = "identity", fill = "coral", width = 0.8) +
+  labs(title = "BMI per User", x = "User ID", y = "BMI") +
+  theme(axis.text.x = element_text(angle = 45, size = 6.7))
+</pre>
+<p contenteditable="true">Visualizing the data</p>
+<pre class="code-block"> 
+#Per user analysis
+data$bmi_category <- cut(data$bmi,
+                         breaks = c(0, 18.5, 24.9, 29.9, Inf),
+                         labels = c("Underweight", "Normal", "Overweight", "Obese"))
+
+</pre>
+<p class="graph-description" contenteditable="true">
+  <strong>Results: </strong>
+  This chart presents the BMI values of users. Most fall within the healthy range, though a few outliers show elevated BMI levels.
+  
+</p>
+<canvas id="bmiChart"></canvas>
+<p contenteditable="true">
+  <br><br>
+  <strong>Action: </strong>
+  <br>Bellabeat is to implement components for BMI tracking and mindfulness. 
+  This involves setting personalised goals, education about having a healthy BMI, 
+  and regular prompts to weigh in. For Bellabeat the aim of being able to provide users 
+  with a better understanding and control over their BMI, the result is a more nurturing and catered health and wellness dynamic.
+</p>
+
+    <h2>Recommendations</h2>
+    <ul contenteditable="true">
+      <li><b>Peak Activity Times:</b> The majority of users get moving between 4 PM and 7 PM when you could be sure to prompt app usage or a challenge.</li>
+
+     <li><b>Sleep Activity Connection:</b> Those who get 6 and up to 8 hours of sleep daily achieve higher average 
+      daily step counts and make the point that rest helps you keep moving.</li>
+
+      <li><b>Low Step Count:</b> There are a few days around 6565 steps on average. It is less than the generally 
+      accepted 10,000 steps/day this points toward potential inspiratorial features or coaching.</li>
+
+      <li><b>The sleep halves:</b> According to Zee and colleagues, the man or woman who sleeps under 
+      6 hours or over 8 hours are equally less active than the normal sleeping individual, 
+      showing a kind of U-shape curve relationship between activity expenditure and sleeping duration.</li>
+
+      <li><b>BMI beyond healthy range:</b> Taking a closer look at users' BMI, the average BMI is 25.73, slightly beyond the healthy range (18.5-24.9), 
+        with which many of the users are categorized in the overweight range, 
+        indicating a potential need for personalized weight management support.</li>
+    </ul>
+
+    <h2>Final Conclusion</h2>
+    <p contenteditable="true">
+      Analysis of Fitbit data exposes important health trends, which Bellabeat can reference 
+      in an ongoing effort to improve user engagement and marketing. Notable behavioral insights (i.e., added activity during the evening, 
+      beneficial effect of 6–8 h of sleep on activity levels, and the slightly higher average BMI outcome) 
+      provide a good basis for designing personalized wellness inspirations.
+      <br><br>
+      By scheduling product features according to user behavior such as boosting activity during peak-hours, 
+      ensuring enough sleep, managing optimal BMI, etc., Bellabeat’s products can offer more compelling, 
+      engaging and relevant wellness experiences. Adopting these data-based approaches not only encourages healthier lifestyles, 
+      but also enhances consumer retention, app usage, and brand promotion in the tight health-tech market.
+      <br><br>
+      This case study demonstrates how thoughtful data analysis can translate into strategic 
+      decisions that benefit both the user and the business, positioning Bellabeat as a smart, responsive, 
+      and wellness-centric company in the digital health market.
+    </p>
+  </section>
+  <section class="fade-in portfolio-summary">
+  <h2>Portfolio Summary</h2>
+  <p class="summary-text">
+    For this project, I examined the activity, sleep, and weight trends of 30 Fitbit users. After cleaning, 
+    transforming, and visualizing the data in R, I found users to be most active during evening hours from 4 to 7 PM. 
+    On average, users took around 6,565 steps a day. Additionally, those who slept between 6 to 8 hours were more likely to be active. 
+    Analysis on BMI indicated that the average user is classified as overweight with a BMI of 25.73 which indicates 
+    that tailored intervention may be beneficial. These insights can help shape targeted marketing campaigns and wellness 
+    initiatives for Bellabeat.
+  </p>
+</section>
+  <section class="fade-in portfolio-summary" id="contsum">
+  <h2>Connect with Me!!</h2>
+  <p class="summary-text">Linked-In : <a href='https://www.linkedin.com/in/krishnanunni-h-pillai-b87448327/' target='_blank'>linkedin.com</a> | Instagram : <a href='https://instagram.com/krishnanunni___1/' target='_blank'>instagram.com</a> | Mail : <a href="mailto:krishnanunnihpillai@gmail.com">Mail Me</a></p>
+</section>
+
+  <footer>
+    <p>© 2025 Krishnanunni H Pillai | Data Analytics Portfolio</p>
+  </footer>
+
+  <script>
+    const animateChart = (ctx, config) => {
+      const chart = new Chart(ctx, {
+        ...config,
+        options: {
+          ...config.options,
+          animation: {
+            duration: 1500,
+            easing: 'easeOutQuart'
+          }
+        }
+      });
+      ctx.parentNode.addEventListener("mouseenter", () => {
+        chart.destroy();
+        new Chart(ctx, config);
+      }, { once: true });
+    };
+
+    animateChart(document.getElementById("activityChart"), {
+  type: 'bar',
+  data: {
+    labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+    datasets: [{
+      label: 'Average Steps',
+      data: [5.1, 7.5, 7.8, 1.5],
+      backgroundColor: ['#00bcd4', '#f87171', '#65a30d', '#c084fc']
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: 'Average Steps' }
+      },
+      x: {
+        title: { display: true, text: 'Time of Day' }
+      }
+    }
+  }
+});
+
+    animateChart(document.getElementById("sleepChart"), {
+  type: 'bar',
+  data: {
+    labels: ['6–8 hrs', 'Less than 6 hrs', 'More than 8 hrs'],
+    datasets: [{
+      label: 'Average Daily Steps',
+      data: [8500, 6700, 7800],
+      backgroundColor: ['#f87171', '#22c55e', '#60a5fa']
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: 'Average Steps' }
+      },
+      x: {
+        title: { display: true, text: 'Sleep Duration Group' }
+      }
+    }
+  }
+});
+
+    animateChart(document.getElementById("bmiChart"), {
+  type: 'bar',
+  data: {
+    labels: ['1533960366', '1927972279', '2347167796', '2623982675', '2891001357', '4445114986', '4558609924', '4702921684', '6962181067', '8253242876', '867678390'],
+    datasets: [{
+      label: 'BMI',
+      data: [23.5, 45.8, 24.8, 21.9, 24.7, 35.1, 29.9, 28.7, 25.3, 29.1, 25.2],
+      backgroundColor: '#fb923c'
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: 'BMI' }
+      },
+      x: {
+        title: { display: true, text: 'User ID' },
+        ticks: { maxRotation: 45, minRotation: 45 }
+      }
+    }
+  }
+});
+
+    animateChart(document.getElementById("stepsChart"), {
+  type: 'bar',
+  data: {
+    labels: [
+      '1503960366','1644430081','1927972279','2022484408','2320127002','2347167796','2414476132','2873212765','2891001357','3372868164','3977333714','4319703577','4388161847','4445114986','4558609924','4702921684','6117666160','6372684045','6962181067','8253242876','867678390'
+    ],
+    datasets: [{
+      label: 'Average Daily Steps',
+      data: [13490, 4700, 14200, 5300, 9300, 7000, 0, 9100, 8900, 5900, 2900, 0, 7600, 8700, 6900, 6700, 10200, 10800, 8100, 12900, 15800],
+      backgroundColor: ctx => ctx.dataIndex === 20 ? '#a855f7' : '#7dd3fc'
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: 'Average Daily Steps' }
+      },
+      x: {
+        title: { display: true, text: 'User ID' },
+        ticks: { maxRotation: 75, minRotation: 75 }
+      }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          generateLabels: () => [{
+            text: 'Top User', fillStyle: '#a855f7'
+          }, {
+            text: 'Other Users', fillStyle: '#7dd3fc'
+          }]
+        }
+      }
+    }
+  }
+});
+  </script>
+  <script>
+    function enlargeImage(img) {
+      const lightbox = document.createElement('div');
+      lightbox.classList.add('lightbox');
+      const imgClone = document.createElement('img');
+      imgClone.src = img.src;
+      imgClone.alt = img.alt;
+      lightbox.appendChild(imgClone);
+      lightbox.onclick = () => document.body.removeChild(lightbox);
+      document.body.appendChild(lightbox);
+    }
+  </script>
+</body>
+</html>
