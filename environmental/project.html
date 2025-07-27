@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bellabeat Case Study - Data Analytics Project</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f9f9;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+    /*=====================================*/
+   .header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.profile-pic {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  animation: pulseGlow 3s ease-in-out infinite, floatY 6s ease-in-out infinite;
+  transition: 0.4s;
+}
+.profile-pic:hover{
+   border-radius: 30%;
+   transition: 1s;
+}
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgb(255, 255, 255);
+  }
+}
+
+@keyframes floatY {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.text-content {
+  text-align: center;
+}
+
+.profile-desc {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f0f0f0;
+  margin-top: 0.5rem;
+}
+    /*=====================================*/
+    header {
+      background: linear-gradient(to right, #59c4b8, #4cb2a3);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .header-content.side-layout {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  text-align: left;
+}.text-content {
+  max-width: 600px;
+}
+    .intro {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+      background: white;
+      text-align: center;
+      animation: fadeIn 1s ease-in;
+    }
+    .intro p{
+      color: #1f1f1f;
+    }
+    .intro h1 {
+      color: #2a7f7f;
+      padding-left: 10px;
+      margin-top: 2rem;
+    }
+    .intro .btn {
+      display: inline-block;
+      margin: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #59c4b8;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .intro .btn:hover {
+      background-color: #4cb2a3;
+    }
+    section {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+      background: white;
+      animation: fadeIn 1s ease-in;
+    }
+    h2 {
+      color: #2a7f7f;
+      border-left: 5px solid #59c4b8;
+      padding-left: 10px;
+      margin-top: 2rem;
+    }
+    h3 {
+      margin-top: 1.5rem;
+      color: #444;
+    }
+    canvas {
+  display: block;
+  margin: 2rem auto;
+  width: 100% !important;
+  height: 480px !important;
+  max-width: 1000px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+    canvas:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    ul {
+      padding-left: 1.5rem;
+    }
+    footer {
+      background: #59c4b8;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+      .screenshot-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .screenshot-gallery img {
+      width: 250px;
+      height: auto;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .screenshot-gallery img:hover {
+      transform: scale(1.05);
+    }
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+    .code-block {
+      background: #1f1f1f;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      color: #f0f0f0;
+      font-family: 'Courier New', monospace;
+    }
+    /* UI animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards ease-out;
+    }
+    .fade-in:nth-child(1) { animation-delay: 0.2s; }
+    .fade-in:nth-child(2) { animation-delay: 0.4s; }
+    .fade-in:nth-child(3) { animation-delay: 0.6s; }
+    .fade-in:nth-child(4) { animation-delay: 0.8s; }
+    .fade-in:nth-child(5) { animation-delay: 1s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .graph-description {
+      text-align: center;
+      font-size: 1rem;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      color: #555;
+    }
+    /*=====================================*/
+ body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: linear-gradient(270deg, #d9a7c7, #fffcdc, #fbc2eb);
+  background-size: 600% 600%;
+  animation: animatedGradient 20s ease infinite;
+  opacity: 0.3;
+}
+
+@keyframes animatedGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.portfolio-summary {
+  background: white;
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-left: 5px solid #59c4b8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.summary-text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+
+</style>
+</head>
+<body>
+<header class="fade-in">
+  <div class="header-content side-layout">
+    <a href="/index.html"><img src="/images/my-profile-img.jpg" alt="Krishnanunni H Pillai" class="profile-pic" /></a>
+    <div class="text-content">
+      <h1>Environmental Insights Using Data Analytics</h1>
+      <p>Climate Trends, Air Quality, and Agricultural Impact of Climate Change</p>
+    </div>
+  </div>
+</header>
+
+  <div class="intro fade-in">
+    <h1 class="author-name">Comming Soon.....</h1>
+</div>
+
+  <section class="fade-in portfolio-summary" id="contsum">
+  <h2>Connect with Me!!</h2>
+  <p class="summary-text">Linked-In : <a href='https://www.linkedin.com/in/krishnanunni-h-pillai-b87448327/' target='_blank'>linkedin.com</a> | Instagram : <a href='https://instagram.com/krishnanunni___1/' target='_blank'>instagram.com</a> | Mail : <a href="mailto:krishnanunnihpillai@gmail.com">Mail Me</a></p>
+</section>
+
+  <footer>
+    <p>© 2025 Krishnanunni H Pillai | Data Analytics Portfolio</p>
+  </footer>
+
+  <script>
+    const animateChart = (ctx, config) => {
+      const chart = new Chart(ctx, {
+        ...config,
+        options: {
+          ...config.options,
+          animation: {
+            duration: 1500,
+            easing: 'easeOutQuart'
+          }
+        }
+      });
+      ctx.parentNode.addEventListener("mouseenter", () => {
+        chart.destroy();
+        new Chart(ctx, config);
+      }, { once: true });
+    };
+
+    animateChart(document.getElementById("activityChart"), {
+  type: 'bar',
+  data: {
+    labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+    datasets: [{
+      label: 'Average Steps',
+      data: [5.1, 7.5, 7.8, 1.5],
+      backgroundColor: ['#00bcd4', '#f87171', '#65a30d', '#c084fc']
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: 'Average Steps' }
+      },
+      x: {
+        title: { display: true, text: 'Time of Day' }
+      }
+    }
+  }
+});
+
+    animateChart(document.getElementById("sleepChart"), {
+  type: 'bar',
+  data: {
+    labels: ['6–8 hrs', 'Less than 6 hrs', 'More than 8 hrs'],
+    datasets: [{
+      label: 'Average Daily Steps',
+      data: [8500, 6700, 7800],
+      backgroundColor: ['#f87171', '#22c55e', '#60a5fa']
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: 'Average Steps' }
+      },
+      x: {
+        title: { display: true, text: 'Sleep Duration Group' }
+      }
+    }
+  }
+});
+
+    animateChart(document.getElementById("bmiChart"), {
+  type: 'bar',
+  data: {
+    labels: ['1533960366', '1927972279', '2347167796', '2623982675', '2891001357', '4445114986', '4558609924', '4702921684', '6962181067', '8253242876', '867678390'],
+    datasets: [{
+      label: 'BMI',
+      data: [23.5, 45.8, 24.8, 21.9, 24.7, 35.1, 29.9, 28.7, 25.3, 29.1, 25.2],
+      backgroundColor: '#fb923c'
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: 'BMI' }
+      },
+      x: {
+        title: { display: true, text: 'User ID' },
+        ticks: { maxRotation: 45, minRotation: 45 }
+      }
+    }
+  }
+});
+
+    animateChart(document.getElementById("stepsChart"), {
+  type: 'bar',
+  data: {
+    labels: [
+      '1503960366','1644430081','1927972279','2022484408','2320127002','2347167796','2414476132','2873212765','2891001357','3372868164','3977333714','4319703577','4388161847','4445114986','4558609924','4702921684','6117666160','6372684045','6962181067','8253242876','867678390'
+    ],
+    datasets: [{
+      label: 'Average Daily Steps',
+      data: [13490, 4700, 14200, 5300, 9300, 7000, 0, 9100, 8900, 5900, 2900, 0, 7600, 8700, 6900, 6700, 10200, 10800, 8100, 12900, 15800],
+      backgroundColor: ctx => ctx.dataIndex === 20 ? '#a855f7' : '#7dd3fc'
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: 'Average Daily Steps' }
+      },
+      x: {
+        title: { display: true, text: 'User ID' },
+        ticks: { maxRotation: 75, minRotation: 75 }
+      }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          generateLabels: () => [{
+            text: 'Top User', fillStyle: '#a855f7'
+          }, {
+            text: 'Other Users', fillStyle: '#7dd3fc'
+          }]
+        }
+      }
+    }
+  }
+});
+  </script>
+  <script>
+    function enlargeImage(img) {
+      const lightbox = document.createElement('div');
+      lightbox.classList.add('lightbox');
+      const imgClone = document.createElement('img');
+      imgClone.src = img.src;
+      imgClone.alt = img.alt;
+      lightbox.appendChild(imgClone);
+      lightbox.onclick = () => document.body.removeChild(lightbox);
+      document.body.appendChild(lightbox);
+    }
+  </script>
+</body>
+</html>
