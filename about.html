@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Base Setup */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0e0e0e;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    h2, h3 {
+      color: #00bcd4;
+    }
+
+    a {
+      color: #00bcd4;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* About Section */
+    .about-section {
+      display: flex;
+      justify-content: space-between;
+      padding: 4rem 2rem;
+      align-items: center;
+      gap: 2rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .about-left {
+      max-width: 600px;
+    }
+
+    .profile-photo {
+      width: 400px;
+      border-radius: 10px;
+      filter: grayscale(0%) brightness(100%);
+      transition: transform 0.3s ease;
+      
+    }
+
+    .profile-photo:hover {
+      transform: scale(1.05);
+      
+    }
+
+    /* Skills Section */
+    .skills-section {
+      display: flex;
+      justify-content: space-between;
+      padding: 3rem 2rem;
+      background-color: #121212;
+      gap: 2rem;
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .column {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .skill {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .bar {
+      background-color: #333;
+      border-radius: 5px;
+      height: 8px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+
+    .bar div {
+      height: 100%;
+      background-color: #00bcd4;
+      width: 0;
+      transition: width 1s ease-in-out;
+    }
+
+    .experience-list,
+    .short-list {
+      list-style: none;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .short-list li {
+      transition: transform 0.3s;
+    }
+
+    .short-list li:hover {
+      transform: translateX(5px);
+    }
+
+    .email {
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .description {
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .location {
+      font-style: italic;
+      color: #bbb;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .about-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .skills-section {
+        flex-direction: column;
+      }
+
+      .profile-photo {
+        margin: 0 auto;
+      }
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background-color: #0e0e0e;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #00bcd4;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #fff;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: #00bcd4;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: #00bcd4;
+    }
+
+    .burger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+        background-color: #0e0e0e;
+        padding: 1rem;
+        position: absolute;
+        top: 60px;
+        right: 2rem;
+        border-radius: 10px;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .burger {
+        display: block;
+      }
+    }
+
+    /* Icon Styles */
+    .icon {
+      margin-right: 10px;
+      color: #00bcd4;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    li:hover .icon {
+      transform: scale(1.3);
+      color: #29f1f1;
+    }
+
+    h3 .icon {
+      margin-right: 8px;
+    }
+    /* Custom Cursor Circle */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(0, 188, 212, 0.7);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease-out;
+  z-index: 10000;
+  mix-blend-mode: difference;
+}
+/* Custom Cursor Styles */
+#cursor-dot,
+#cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: background 0.3s ease;
+}
+
+#cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #00bcd4;
+  border-radius: 50%;
+}
+
+#cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 2px solid #00bcd4;
+  border-radius: 50%;
+  transition: transform 0.15s ease-out, border-color 0.25s ease;
+}
+
+
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-container">
+    <div class="logo"><a href="index.html">Krishnanunni H Pillai</a></div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#experience">What Can I Do ?</a>
+    </nav>
+    <div class="burger" onclick="toggleNav()">☰</div>
+  </div>
+</header>
+
+<main class="about-section" id="about">
+  <div class="about-left">
+    <h2>About</h2>
+    <p><strong>Tech Enthusiast | Data Analyst | Mentor | Coach</strong></p>
+    <p class="email"><i class="fa-solid fa-envelope"></i> krishnanunnihpillai@gmail.com</p>
+    <p class="email"> <a href="index.html">My Resume</a></p>
+    <p class="description">
+      <strong>🧘🏻‍♂🍃</strong> <br>
+      Hi, I'm Krishnanunni — a passionate B.Tech student at Adi Shankara Institute of Engineering and Technology, 
+      specializing in data analysis and emerging technologies.
+While pursuing my degree, I’ve consistently enhanced my skill set through hands-on projects, 
+in-depth case studies, and continuous self-learning. <br>I love working with data from cleaning complex datasets 
+to deriving actionable insights that support smarter decision-making.
+<br>
+My technical toolkit includes:
+<ul>
+<li>R Programming</li>
+<br>
+<li>Python</li>
+<br>
+<li>SQL</li>
+<br>
+<li>Spreadsheet analysis (Excel/Google Sheets)</li>
+<br>
+<li>C Programming</li>
+<br>
+<li>Data-driven decision-making</li>
+<br>
+</ul>
+
+Beyond data, <br>
+I actively explore web development, project management, and research as part of both my academic and personal growth.
+<br>
+I’m also a mentor and coach, helping peers strengthen their skills and confidence in tech and academics. <br>
+Outside the classroom, I’ve been a dedicated karate student and trainer for over 12 years, continuing to train and teach with the same discipline and commitment I apply to my studies.
+<br>
+I'm always excited to learn, adapt, and apply new technologies to solve real-world challenges.
+
+
+
+    </p>
+    <p class="location"><i class="fa-solid fa-location-crosshairs"></i> <b>&nbsp;India</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kerala, Ernakulam, Kalady<br></p>
+  </div>
+  <div class="about-right">
+    <img src="images/hero-bg.jpg" alt="Jason Martin" class="profile-photo"/>
+  </div>
+</main>
+
+<section class="skills-section" id="skills">
+  <div class="column">
+    <h3><i class="fas fa-laptop-code icon"></i> Skills</h3>
+    <div class="skill">R<div class="bar"><div style="width: 70%"></div></div></div>
+    <div class="skill">Data Driven Decesion Making<div class="bar"><div style="width: 90%"></div></div></div>
+    <div class="skill">Data Analytics<div class="bar"><div style="width: 89%"></div></div></div>
+    <div class="skill">SQL<div class="bar"><div style="width: 80%"></div></div></div>
+    <div class="skill">SpreadSheet<div class="bar"><div style="width: 80%"></div></div></div>
+    <div class="skill">Project Management<div class="bar"><div style="width: 90%"></div></div></div>
+    <div class="skill">C Programming<div class="bar"><div style="width: 90%"></div></div></div>
+    <div class="skill">Python (Pandas, MatPlotlib, NumPy)<div class="bar"><div style="width: 50%"></div></div></div>
+    <div class="skill">Web development<div class="bar"><div style="width: 70%"></div></div></div>
+    
+    <h3><i class="fas fa-language icon"></i> Languages</h3>
+    <div class="skill">English <div class="bar"><div style="width: 90%"></div></div></div>
+    <div class="skill">Hindi<div class="bar"><div style="width: 60%"></div></div></div>
+    <div class="skill">Malayalam<div class="bar"><div style="width: 100%"></div></div></div>
+  </div>
+
+  <div class="column" id="experience">
+    
+    <h3><i class="fas fa-briefcase icon"></i> Contact</h3>
+    <ul class="experience-list">
+      <li><i class="fas fa-layer-group icon"></i></i><strong>Instagram Id :</strong> krishnanunni___1</li>
+      <li><i class="fas fa-layer-group icon"></i><strong>LinkedIn :</strong> linkedin.com/in/krishnanunni-h-pillai-b87448327/ </li>
+      <li><i class="fas fa-layer-group icon"></i><strong>Email : </strong> krishnanunnihpillai@gmail.com</li>
+    </ul>
+  
+    <h3><i class="fas fa-graduation-cap icon"></i> Education</h3>
+    <p>Pursuing B.Tech in Data Science Engineering<br>Adi Shankara Institute of Engineering and Technology</p>
+  </div>
+
+  <div class="column">
+    <h3><i class="fas fa-tools icon"></i> What Can I Do?</h3>
+    <p>
+      I thrive on interpreting information and presenting it in a simple yet impactful way that informs and improves strategic choices. 
+      <br>I am proficient in R programming, SQL, and even spreadsheets, so I could make use of them for data analysis as well as data visualization. 
+      From untangling complicated datasets to examining trends and articulating results, every stage of the data process delights me.
+      <br><br>
+      Even as a student, I've tackled real-world problems through projects and case studies, so I've been able to hone my skills in the field. 
+      I also have knowledge of Python, C programming, project management, and web development, so I'm a versatile member of multidisciplinary teams.
+    </p>
+    <p>Key things I bring to the table:</p>
+    <ul class="short-list">
+        <li><i class="fas fa-paint-brush icon"></i>Visualizations that are clear and compelling, which convey insights effectively.</li>
+        <li><i class="fas fa-paint-brush icon"></i>Analytical thinking leveraging R, SQL, and spreadsheets to find and understand data patterns that are meaningful.</li>
+        <li><i class="fas fa-paint-brush icon"></i>Complete data management, from collection and cleaning through to analysis and reporting.</li>
+        <li><i class="fas fa-paint-brush icon"></i>Strategic approach for decision-making that is based on data, not on assumptions.</li>
+       <li> <i class="fas fa-paint-brush icon"></i>Working with the team and planning projects while being ready to learn and develop.</li>
+    </ul>
+  </div>
+</section>
+<div class="cursor" id="cursor"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+
+<script>
+  // Animate skill bars
+  function animateSkillBars() {
+    const bars = document.querySelectorAll('.bar div');
+    const triggerBottom = window.innerHeight * 0.99;
+
+    bars.forEach(bar => {
+      const barTop = bar.getBoundingClientRect().top;
+      const targetWidth = bar.dataset.targetWidth;
+
+      if (barTop < triggerBottom && !bar.classList.contains('filled')) {
+        bar.style.width = targetWidth;
+        bar.classList.add('filled');
+      }
+    });
+  }
+
+  // Store target widths
+  document.querySelectorAll('.bar div').forEach(bar => {
+    const style = bar.getAttribute('style');
+    const match = style.match(/width:\s*(\d+%)/);
+    if (match) {
+      bar.dataset.targetWidth = match[1];
+      bar.style.width = '0%';
+    }
+  });
+
+  window.addEventListener('scroll', animateSkillBars);
+  window.addEventListener('load', animateSkillBars);
+</script>
+
+<script>
+  function toggleNav() {
+    const navLinks = document.getElementById("navLinks");
+    navLinks.classList.toggle("active");
+  }
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute("href").slice(1);
+      document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      toggleNav();
+    });
+  });
+</script>
+<script>
+  const cursor = document.getElementById('cursor');
+
+  document.addEventListener('mousemove', e => {
+    cursor.style.top = e.clientY + 'px';
+    cursor.style.left = e.clientX + 'px';
+  });
+</script>
+<script>
+  const cursorDot = document.getElementById('cursor-dot');
+  const cursorRing = document.getElementById('cursor-ring');
+
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.top = `${mouseY}px`;
+    cursorDot.style.left = `${mouseX}px`;
+  });
+
+  function animate() {
+    ringX += (mouseX - ringX) * 0.2;
+    ringY += (mouseY - ringY) * 0.2;
+    cursorRing.style.top = `${ringY}px`;
+    cursorRing.style.left = `${ringX}px`;
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  // Enlarge ring on hover over links or interactive elements
+  const interactiveElements = document.querySelectorAll('a, button, .clickable');
+
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursorRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
+      cursorRing.style.borderColor = '#fff';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
+      cursorRing.style.borderColor = '#00bcd4';
+    });
+  });
+</script>
+
+</body>
+</html>

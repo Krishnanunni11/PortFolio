@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Echofi - Data Analytics Project</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+    color: #333;
+    overflow-x: hidden;
+  }
+
+  header {
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  header h1 {
+    font-size: 3rem;
+    background: -webkit-linear-gradient(45deg, #00796b, #00acc1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  header p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+
+  .section {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 1rem;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeSlideIn 1s ease forwards;
+  }
+  @keyframes fadeSlideIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .description {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 150, 136, 0.1);
+  }
+
+  .images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  figure {
+    margin: 0;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 150, 136, 0.1);
+    text-align: center;
+  }
+  figure img {
+    width: 100%;
+    border-radius: 0.75rem;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  figure img:hover {
+    transform: scale(1.08);
+  }
+  figure figcaption {
+    font-size: 0.9rem;
+    color: #555;
+    padding-top: 0.5rem;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); display: none;
+    align-items: center; justify-content: center;
+    z-index: 999;
+  }
+  .lightbox img { max-width: 90%; max-height: 80%; border-radius: 1rem; }
+  .lightbox:target { display: flex; }
+  .lightbox .close {
+    position: absolute; top: 2rem; right: 2rem;
+    color: #fff; font-size: 2rem; text-decoration: none;
+  }
+
+  /* Sample demo modal */
+  .demo-modal {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 1000;
+    display: none;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    padding: 2rem;
+    color: #fff;
+  }
+  .demo-modal.active { display: flex; }
+
+  .demo-modal .close-demo {
+    position: absolute; top: 2rem; right: 2rem;
+    color: #fff; font-size: 2rem; cursor: pointer;
+  }
+
+  .sample-button {
+    margin-top: 1rem;
+    padding: 0.8rem 1.2rem;
+    background: #00acc1;
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .sample-button:hover { background: #00796b; }
+
+  footer {
+    text-align: center;
+    padding: 1rem;
+    color: #777;
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>Echofi</h1>
+    <p>Dynamic Data Analytics Project</p>
+  </header>
+
+  <section class="section">
+    <div class="description">
+      <h2>About the Project</h2>
+      <p>
+        Echofi is a real-time data analytics system developed using NodeMCU (ESP8266), designed to track WiFi RSSI values across various locations.
+        The system sends data to a web dashboard that updates every 10 seconds, displaying dynamic graphs and tables.
+      </p>
+      <button class="sample-button" id="demoButton">Play Sample Live Demo</button>
+    </div>
+  </section>
+    <section class="section">
+    <h2 style="text-align:center;">Project Screenshots & Descriptions</h2>
+    <div class="images">
+      <figure>
+        <a href="#lightbox1"><img src="images/dashboard2.PNG" alt="Live dashboard"></a>
+        <figcaption>This is the live dashboard showing real-time RSSI data updates and graphical trends.</figcaption>
+      </figure>
+      <figure>
+        <a href="#lightbox2"><img src="images/chart.png" alt="Heatmap view"></a>
+        <figcaption>This heatmap view allows you to visualize signal strength across different mapped locations.</figcaption>
+      </figure>
+      <figure>
+        <a href="#lightbox1"><img src="images/dashboard3.PNG" alt="Live dashboard"></a>
+        <figcaption>This is the live dashboard showing real-time RSSI data updates and graphical trends.</figcaption>
+      </figure>
+      <figure>
+        <a href="#lightbox3"><img src="images/analysis_data.png" alt="CSV export feature"></a>
+        <figcaption>The CSV export feature lets you download historical data for offline analysis and reporting.</figcaption>
+      </figure>
+    </div>
+  </section>
+  <section class="section">
+    <div class="description">
+      <h2> Features</h2>
+      <p>
+          <strong>==></strong> Real-Time WiFi RSSI Monitoring: NodeMCU collects signal strength at regular intervals.<br><br>
+          <strong>==></strong> Live Dashboard: Displays RSSI readings on a responsive web UI with dynamic charts.<br><br>
+          <strong>==></strong> Location Support: Tag each measurement with a specific location in your home/building.<br><br>
+          <strong>==></strong> Downloadable CSV: Save all logged data as a CSV file with a single click.<br><br>
+          <strong>==></strong> Data Analytics Ready: View min, max, average, and standard deviation per location for easy analysis.<br><br>
+          <strong>==></strong> ESP8266 + Common Anode 7-Segment Display: shows the time left to send the data to the webpage.<br><br>
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="description">
+      <h2>How It Works</h2>
+      <p>
+                    
+          <strong>==></strong> The NodeMCU (ESP8266) scans the current WiFi RSSI.<br><br>
+          <strong>==></strong> RSSI readings, along with SSID and location, are sent via HTTP POST to a Node.js server.<br><br>
+          <strong>==></strong> The Node.js backend appends each reading to a CSV file (data.csv).<br><br>
+          <strong>==></strong> The front-end dashboard (hosted by the Node.js server) loads the latest data:<br><br>
+          <strong>==></strong> Renders a responsive RSSI graph using Chart.js.<br><br>
+          <strong>==></strong> Shows an interactive table with historical readings. <br><br>
+          <strong>==></strong> Displays the current selected location. <br><br>
+          <strong>==></strong> Allows you to update the measurement location dynamically. <br><br>
+          <strong>==></strong> Offers a one-click CSV download of all readings. <br><br>
+          <strong>==></strong> The NodeMCU hardware displays time left to send the next RSSI value on a 7-segment. <br><br>
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="description">
+      <h2>Software Stacks</h2>
+      <p>
+          <strong>==></strong> Node.js with Express for backend and CSV logging.
+          <strong>==></strong> Chart.js for real-time signal strength graph.
+          <strong>==></strong> Custom CSS/JS/HTML for a responsive dashboard.
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="description">
+      <h2>Getting Started</h2>
+      <p>
+          <strong>==></strong> Backend Setup Clone the repo: git clone <a href="https://github.com/Krishnanunni11/EchoFi.git">https://github.com/Krishnanunni11/EchoFi.git</a> cd EchoFi <br><br>
+          <strong>==></strong> Install dependencies: npm init -y npm install express cors body-parser <br><br>
+          <strong>==></strong> Start the server: node index.js <br><br>
+          <strong>==></strong> Run the Server: node server.js <br><br>
+          <strong>==></strong> Server will listen on <a href="http://localhost:3000">http://localhost:3000</a> <br><br>
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="description">
+      <h2>Dashboard Usage</h2>
+      <p>
+          Visit <a href="http://localhost:3000">http://localhost:3000</a> in your browser. <br><br>
+          <strong>==></strong> View the live RSSI graph. <br><br>
+          <strong>==></strong> Download historical data as CSV. <br><br>
+          <strong>==></strong> Update the current measurement location. <br><br>
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="description">
+      <h2>Analysis You Can Do</h2>
+      <p>
+          With CSV data, you can: <br><br> 
+          <strong>==></strong> Compute average RSSI per location. <br><br>
+          <strong>==></strong> Find min and max RSSI per spot. <br><br>
+          <strong>==></strong> Visualize signal coverage as a heatmap of your house. <br><br>
+          <strong>==></strong> Perform standard deviation analysis to check signal stability. <br><br>
+      </p>
+    </div>
+  </section>
+
+  <!-- Lightboxes -->
+  <div id="lightbox1" class="lightbox"><a href="#" class="close">&times;</a><img src="images/dashboard2.PNG"></div>
+  <div id="lightbox2" class="lightbox"><a href="#" class="close">&times;</a><img src="images/chart.png"></div>
+  <div id="lightbox3" class="lightbox"><a href="#" class="close">&times;</a><img src="images/analysis_data.png"></div>
+
+  <!-- Sample Demo Modal -->
+  <div class="demo-modal" id="demoModal">
+    <span class="close-demo" id="closeDemo">&times;</span>
+    <h2>Live Dashboard Simulation</h2>
+    <!-- 📽️ Video demo added here -->
+    <video src="/videos/demo.mp4" controls style="width: 80%; max-width: 800px; border-radius: 1rem;"></video>
+  </div>
+
+  <footer>
+    &copy; 2025 Echofi Project | Data Analytics
+  </footer>
+
+  <script>
+    const demoButton = document.getElementById('demoButton');
+    const demoModal = document.getElementById('demoModal');
+    const closeDemo = document.getElementById('closeDemo');
+
+    demoButton.onclick = () => demoModal.classList.add('active');
+    closeDemo.onclick = () => demoModal.classList.remove('active');
+    demoModal.onclick = (e) => { if (e.target === demoModal) demoModal.classList.remove('active'); };
+  </script>
+
+</body>
+</html>
